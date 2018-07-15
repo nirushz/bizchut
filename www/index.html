@@ -14,28 +14,37 @@
         <meta name="msapplication-tap-highlight" content="no">
         <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
         <link rel="stylesheet" type="text/css" href="css/index.css">
+        <dir></dir>
         <title>בזכות נשים - אפליקציית לימוד תורה יומית לנשים</title>
     </head>
     <body>
-        <div id="loader" class="loader-loading"></div>
-        <div class="header-container">
-            <div class="header-title">
-                <div id="menu" ></div>
-                <div id="app-title" >
-                    <h1>בזכות נשים</h1>
+        <div id="loader" class="loader-loading">
+            <div id="logo-spinner-container">
+                <img id="logo-background-img" src="img/logo_background.svg" alt="logo background" class="spin360">
+            </div>
+        </div>
+        <div id="main-container">
+            <div class="header-container">
+                <div class="header-title">
+                    <div id="menu" ></div>
+                    <div id="app-title" >
+                        <h1>בזכות נשים</h1>
+                    </div>
+                </div>
+                <div class="header-date">
+                    <div id="left-arrow" ></div>
+                    <div id="hebrew-date" ></div>
+                    <div id="right-arrow" ></div>
                 </div>
             </div>
-            <div class="header-date">
-                <div id="left-arrow" ></div>
-                <div id="hebrew-date" ></div>
-                <div id="right-arrow" ></div>
+
+            <div class="body-container">
+
+                
             </div>
+
         </div>
 
-        <div class="body-container">
-
-            
-        </div>
         <script type="text/javascript" src="cordova.js"></script>
         <script type="text/javascript" src="js/index.js"></script>
     </body>
