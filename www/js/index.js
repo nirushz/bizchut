@@ -16,8 +16,9 @@ setTimeout(loadDataCompleted, 2000);
 
 function loadDataCompleted(){
     console.log("loadDataCompleted");
-    loader.className +=" slide-down"
-    document.getElementById("logo-background-img").className = "fadeOut";
+    loader.className +=" slide-down fadeOut"
+    //document.getElementById("loader").className = "fadeOut";
+    localStorage.setItem("loadDataCompleted-time", new Date().getTime().toString())
 }
 
 function loaderAnimationStart(){

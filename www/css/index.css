@@ -10,6 +10,10 @@ body{
     direction: rtl;
 }
 
+h1{
+    margin: 0px;
+}
+
 #loader{
     position: relative;
     width: 100%;
@@ -17,13 +21,38 @@ body{
 }
 
 #logo-spinner-container{
-    width: 50%;
     position: absolute;
+    width: 50%;
     right: 50%;
     bottom: 50%;
     transform:translate(50%,50%)
 }
 
+#loader p {
+   text-align: center;
+   position: relative;
+   top: 30px;
+}
+#logo-spinner-container span{
+    position: absolute;
+    right: 50%;
+    bottom: 60%;
+    transform:translate(50%,50%);
+    font-size: 15vw;
+    font-weight: bold;
+    z-index: 2;
+    background: linear-gradient(to right, #FFE32D , #FAB019);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#logo-hand-img{
+    position: absolute;
+    width:70%;
+    bottom: 5%;
+    right: 10%;
+    z-index: 2;
+}
 .spin360 {
     
     -webkit-animation:spin 4s linear infinite;
@@ -38,7 +67,7 @@ body{
 .fadeOut {
     visibility: hidden;
     opacity: 0;
-    transition: visibility 0s 2s, opacity 1.5s linear;
+    transition: visibility 1.5s, opacity 1.5s ease-in;
 }
 
 
@@ -51,4 +80,12 @@ body{
 @keyframes slideDown{
     0% {}
     100% {background-color: white; height: 0px; display: none;}
+}
+
+
+/*After loading elements*/
+
+
+#app-title img{
+    width: 40%;
 }
