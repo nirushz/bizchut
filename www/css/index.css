@@ -14,6 +14,14 @@ h1{
     margin: 0px;
 }
 
+hr{
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #FFE32D , #FAB019);
+    height: 2px;
+    border: 0;
+}
+
 #loader{
     position: relative;
     width: 100%;
@@ -85,7 +93,30 @@ h1{
 
 /*After loading elements*/
 
+.header-title{
+    display:flex;
 
+}
+
+#app-title {
+    width: 70%;
+}
 #app-title img{
-    width: 40%;
+    width: 60%;
+}
+
+#app-contact-us {
+    width: 25%;
+    position: relative;
+    top:2px;
+}
+#app-contact-us img{
+    width: 50%;
+}
+
+#app-menu {
+    width: 2%;
+}
+#app-menu img{
+
 }

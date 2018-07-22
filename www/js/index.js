@@ -10,21 +10,30 @@ let postsData;
 if (shouldLoadDataToday){
     mainContainer.style.display = "none"
     loader.style.height = screen.height + "px";
+
+    //TODO: get the categories to fetch from settins/local storage
     let categoriesToFetch = [2,3,4];
     fetchData(categoriesToFetch)
-
+    
 }
 
 
 async function fetchData (categoriesToFetch) {
-    // await response of fetch call
-    let response = await fetch(`https://bizchut-nashim.com/wp-json/wp/v2/posts/?categories=${categoriesToFetch}`);
-    // only proceed once promise is resolved
-    postsData = await response.json();
+    try{
+        // await response of fetch call
+        let response = await fetch(`https://bizchut-nashim.com/wp-json/wp/v2/posts/?categories=${categoriesToFetch}`);
+        // only proceed once promise is resolved
+        postsData = await response.json();
+        
+    }
+    catch(e){
+        alert("fetchData func:" + e);
+    }
+    loadDataCompleted();
 }
 
 
-setTimeout(loadDataCompleted, 2000);
+//setTimeout(loadDataCompleted, 2000);
 
 function loadDataCompleted(){
     console.log(postsData);
