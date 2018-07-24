@@ -91,9 +91,9 @@ hr{
 }
 
 
-/*After loading elements*/
+/*APP NAME*/
 
-.header-title{
+.header-app-name{
     display:flex;
 
 }
@@ -117,6 +117,36 @@ hr{
 #app-menu {
     width: 2%;
 }
-#app-menu img{
 
+/*APP DATE*/
+
+.header-app-date{
+    display:flex;
+    margin-top: 3px;
+}
+
+#hebrew-date{
+    width: 100%;
+    text-align: center;
+}
+
+.arrow {
+    border: solid #FAB019;
+    border-width: 0 2px 2px 0;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-top: 7px;
+}
+  
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    margin-right: 5px;
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    margin-left: 5px;
 }
