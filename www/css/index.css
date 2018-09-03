@@ -5,9 +5,13 @@
     src: url('../Fonts/Heebo-Regular.ttf');
 }
 
+html{
+    height: 100%;
+}
 body{
     font-family: 'Heebo', sans-serif;
     direction: rtl;
+    height: 100%;
 }
 
 h1{
@@ -92,6 +96,9 @@ hr{
 
 
 /*APP NAME*/
+#main-container{
+    height: 100%;
+}
 
 .header-app-name{
     display:flex;
@@ -149,4 +156,14 @@ hr{
     transform: rotate(135deg);
     -webkit-transform: rotate(135deg);
     margin-left: 5px;
+}
+
+
+/*Body Container*/
+
+#body-container{
+    height: 100%;
+}
+.contentClass{
+    height: 30%
 }
