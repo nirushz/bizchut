@@ -18,14 +18,21 @@ h1{
     margin: 0px;
 }
 
-hr{
+.hr-date{
     margin: 0;
     padding: 0;
     background: linear-gradient(to right, #FFE32D , #FAB019);
-    height: 2px;
+    height: 1px;
     border: 0;
 }
 
+.hr-content{
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #CB1461 , #60054A);
+    height: 1px;
+    border: 0;
+}
 #loader{
     position: relative;
     width: 100%;
@@ -129,7 +136,8 @@ hr{
 
 .header-app-date{
     display:flex;
-    margin-top: 3px;
+    margin-top: 6px;
+    margin-bottom: 7px;
 }
 
 #hebrew-date{
@@ -162,8 +170,32 @@ hr{
 /*Body Container*/
 
 #body-container{
-    height: 100%;
+    /*height: 100%;*/
 }
+
 .contentClass{
-    height: 30%
+    height: 30%;
+    margin: 10px 0;
+}
+
+.postCategory{
+    font-size: 6vw;
+    color: #60054A
+}
+
+.postTitle{
+    font-size: 5vw;
+    font-weight: bold;
+}
+
+.postContent{
+    font-size: 4vw;
+}
+
+.postReadMore{
+    text-align: left;
+}
+
+.postReadMore span{
+    color: #FAB019;
 }

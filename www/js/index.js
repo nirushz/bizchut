@@ -108,11 +108,13 @@ function loadDataCompleted(){
 
 function buildBodyContainer(){
     postsByCategories.forEach(element => {
-        var el = document.createElement( 'div' );
+        var el = document.createElement('div');
         el.innerHTML = `<div class='contentClass'>
-                            <div class='postTitle'>${JSON.stringify(element[rightArrowPressedCounter].title.rendered)}</div>
-                            <div class='postContent'>${JSON.stringify(element[rightArrowPressedCounter].content.rendered)})</div>
-                            <div class='postReadMore'>להמשך קריאה >></div>
+                            <div class='postCategory'>מסלול לימוד ${getCategoryNameByID(element[rightArrowPressedCounter].categories[0])} </div>
+                            <div class='postTitle'>${element[rightArrowPressedCounter].title.rendered}</div>
+                            <div class='postContent'>${element[rightArrowPressedCounter].content.rendered}</div>
+                            <div class='postReadMore'><span>>></span>המשך..</div>
+                            <hr class='hr-content'>
                         </div>`;
 
         
