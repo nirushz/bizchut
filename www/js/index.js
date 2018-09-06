@@ -107,17 +107,28 @@ function loadDataCompleted(){
 }
 
 function buildBodyContainer(){
-    postsByCategories.forEach(element => {
+    postsByCategories.forEach((element, index) => {
         var el = document.createElement('div');
-        el.innerHTML = `<div class='contentClass'>
-                            <div class='postCategory'>מסלול לימוד ${getCategoryNameByID(element[rightArrowPressedCounter].categories[0])} </div>
-                            <div class='postTitle'>${element[rightArrowPressedCounter].title.rendered}</div>
-                            <div class='postContent'>${element[rightArrowPressedCounter].content.rendered}</div>
-                            <div class='postReadMore'><span>>></span>המשך..</div>
+        el.innerHTML = `<div>
+                            <div class='contentClass'>
+                                <div class='postCategory'>מסלול לימוד ${getCategoryNameByID(element[rightArrowPressedCounter].categories[0])} </div>
+                                <div class='postTitle'>${element[rightArrowPressedCounter].title.rendered}</div>
+                                <div class='postContent'>${element[rightArrowPressedCounter].content.rendered}</div>
+                            </div>
+                            <div class='postReadMore'><span>>></span>המשך...</div>
                             <hr class='hr-content'>
-                        </div>`;
+                        <div>`;
 
         
         bodyContainer.appendChild(el);
+        console.log(index);
     });
+
+    Array.from(document.getElementsByClassName("postReadMore")).forEach(element =>{
+        addEventListener("click", postReadMoreHandler, false);
+    });
+}
+
+function postReadMoreHandler(e){
+    console.log(e);
 }

@@ -174,8 +174,9 @@ h1{
 }
 
 .contentClass{
-    height: 30%;
+    height: 30vh;
     margin: 10px 0;
+    overflow: scroll;
 }
 
 .postCategory{
@@ -194,8 +195,11 @@ h1{
 
 .postReadMore{
     text-align: left;
+    font-weight: bold;
+    font-size: 4vw;
 }
 
 .postReadMore span{
     color: #FAB019;
+    margin: 0 10px;
 }
