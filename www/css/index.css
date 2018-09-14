@@ -173,10 +173,18 @@ h1{
     /*height: 100%;*/
 }
 
-.contentClass{
-    height: 30vh;
+.contentClass-collapsed{
+    max-height: 30vh;
     margin: 10px 0;
     overflow: scroll;
+    transition: max-height 1s;
+}
+
+.contentClass-extended {
+    max-height: 2000px;
+    margin: 10px 0;
+    overflow: scroll;
+    transition: max-height 2s ease-in;
 }
 
 .postCategory{
@@ -203,3 +211,4 @@ h1{
     color: #FAB019;
     margin: 0 10px;
 }
+

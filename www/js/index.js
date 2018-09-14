@@ -34,10 +34,11 @@ function leftArrowClicked(){
 
 
 
-/*App Flow */
-fetchHebrowDate();
+/***** App Flow *****/
 
-function fetchHebrowDate () {
+SetHebrowDate();
+
+function SetHebrowDate () {
     try{
         let todayHebroeDate = new Hebcal.HDate(Hebcal.HDate()).toString('h');
         console.log(todayHebroeDate);
@@ -45,11 +46,12 @@ function fetchHebrowDate () {
         
     }
     catch(e){
-        alert("Error in fetchPosts fetchHebrowDate:" + e);
+        alert("Error in SetHebrowDate:" + e);
     }
     
 }
 
+//TODO: get the categories to fetch from settins/local storage
 function getCategoriesToFetch(){
     return [2,3,4];
 }
@@ -110,7 +112,7 @@ function buildBodyContainer(){
     postsByCategories.forEach((element, index) => {
         var el = document.createElement('div');
         el.innerHTML = `<div>
-                            <div class='contentClass'>
+                            <div class='contentClass-collapsed'>
                                 <div class='postCategory'>מסלול לימוד ${getCategoryNameByID(element[rightArrowPressedCounter].categories[0])} </div>
                                 <div class='postTitle'>${element[rightArrowPressedCounter].title.rendered}</div>
                                 <div class='postContent'>${element[rightArrowPressedCounter].content.rendered}</div>
@@ -130,5 +132,16 @@ function buildBodyContainer(){
 }
 
 function postReadMoreHandler(e){
+    e.stopPropagation();
     console.log(e);
+    
+    if(e.target.className == "postReadMore"){
+        let contentClass = e.target.parentElement.firstElementChild;
+        if(contentClass.className == "contentClass-collapsed"){
+            contentClass.className = "contentClass-extended";
+        }
+        else{
+            contentClass.className = "contentClass-collapsed";
+        }
+    }
 }
