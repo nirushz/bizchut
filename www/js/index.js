@@ -127,21 +127,25 @@ function buildBodyContainer(){
     });
 
     Array.from(document.getElementsByClassName("postReadMore")).forEach(element =>{
-        addEventListener("click", postReadMoreHandler, false);
+        addEventListener("click", postReadMoreClickHandler, false);
     });
 }
 
-function postReadMoreHandler(e){
+function postReadMoreClickHandler(e){
     e.stopPropagation();
-    console.log(e);
-    
     if(e.target.className == "postReadMore"){
         let contentClass = e.target.parentElement.firstElementChild;
         if(contentClass.className == "contentClass-collapsed"){
             contentClass.className = "contentClass-extended";
+            window.setTimeout(()=>{
+                e.target.innerHTML = "סגירה<span><<</span>"
+            },1000);  
         }
         else{
             contentClass.className = "contentClass-collapsed";
+            window.setTimeout(()=>{
+                e.target.innerHTML = "<span>>></span>המשך..."
+            },800);
         }
     }
 }
