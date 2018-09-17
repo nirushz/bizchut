@@ -19,7 +19,9 @@ rightArrow = document.getElementById("right-arrow");
 rightArrow.addEventListener("click",rightArrowClicked);
 function rightArrowClicked(){
     ++rightArrowPressedCounter;
-    leftArrow.style.display = "block";
+    //leftArrow.style.display = "block";
+    leftArrow.style.border= "solid #FAB019";
+    leftArrow.style.borderWidth= "0 2px 2px 0";
 }
 
 /* Left Arrow*/
@@ -28,7 +30,9 @@ leftArrow.addEventListener("click",leftArrowClicked);
 function leftArrowClicked(){
     --rightArrowPressedCounter;
     if (rightArrowPressedCounter == 0){
-        leftArrow.style.display = "none";
+        //leftArrow.style.display = "none";
+        leftArrow.style.border= "solid #d4d1ca";
+        leftArrow.style.borderWidth= "0 2px 2px 0";
     }
 }
 
@@ -85,7 +89,7 @@ async function fetchPosts (categoriesToFetch) {
     
 }
 
-
+//Insert the posts that was fetched into Map by categories
 function loadDataCompleted(){
     console.log(postsData);
     postsData.map((post) =>{
@@ -96,8 +100,7 @@ function loadDataCompleted(){
         }
 
         arr.push(post);
-        postsByCategories.set(post.categories[0], arr);
-        
+        postsByCategories.set(post.categories[0], arr);  
     });
     loader.className +=" slide-down fadeOut"
     
@@ -108,6 +111,7 @@ function loadDataCompleted(){
     buildBodyContainer()
 }
 
+//Insert posts contents"
 function buildBodyContainer(){
     postsByCategories.forEach((element, index) => {
         var el = document.createElement('div');
@@ -121,11 +125,10 @@ function buildBodyContainer(){
                             <hr class='hr-content'>
                         <div>`;
 
-        
         bodyContainer.appendChild(el);
         console.log(index);
     });
-
+    //attach click handler to "read more sections"
     Array.from(document.getElementsByClassName("postReadMore")).forEach(element =>{
         addEventListener("click", postReadMoreClickHandler, false);
     });
