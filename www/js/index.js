@@ -18,7 +18,9 @@ function loaderAnimationStart(){
 rightArrow = document.getElementById("right-arrow");
 rightArrow.addEventListener("click",rightArrowClicked);
 function rightArrowClicked(){
-    ++rightArrowPressedCounter;
+    if (bodyContainer.firstElementChild && bodyContainer.firstElementChild.id != "endOfContent"){
+        ++rightArrowPressedCounter;
+    }
     console.log(rightArrowPressedCounter);
     leftArrow.style.border= "solid #FAB019";
     leftArrow.style.borderWidth= "0 2px 2px 0";
@@ -149,7 +151,9 @@ function buildBodyContainer(){
     });
 
 
-    //TODO: check if bodyContainer is empty!!!
+    if(!bodyContainer.firstChild){
+        bodyContainer.innerHTML = `<div id="endOfContent">תודה לרב גבריאל אלישע!<div>`
+    }
 }
 
 function postReadMoreClickHandler(e){
