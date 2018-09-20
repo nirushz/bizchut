@@ -19,9 +19,12 @@ rightArrow = document.getElementById("right-arrow");
 rightArrow.addEventListener("click",rightArrowClicked);
 function rightArrowClicked(){
     ++rightArrowPressedCounter;
-    //leftArrow.style.display = "block";
+    console.log(rightArrowPressedCounter);
     leftArrow.style.border= "solid #FAB019";
     leftArrow.style.borderWidth= "0 2px 2px 0";
+    buildBodyContainer();
+
+
 }
 
 /* Left Arrow*/
@@ -29,11 +32,16 @@ leftArrow = document.getElementById("left-arrow");
 leftArrow.addEventListener("click",leftArrowClicked);
 function leftArrowClicked(){
     --rightArrowPressedCounter;
+    console.log(rightArrowPressedCounter);
+    if (rightArrowPressedCounter < 0){
+        rightArrowPressedCounter = 0;
+        return;
+    }
     if (rightArrowPressedCounter == 0){
-        //leftArrow.style.display = "none";
         leftArrow.style.border= "solid #d4d1ca";
         leftArrow.style.borderWidth= "0 2px 2px 0";
     }
+    buildBodyContainer();
 }
 
 
@@ -113,25 +121,35 @@ function loadDataCompleted(){
 
 //Insert posts contents"
 function buildBodyContainer(){
+    //Remove old content if exists (usefull when pressing arrows)
+        while (bodyContainer.firstChild) {
+            bodyContainer.removeChild(bodyContainer.firstChild);
+        }
+   
+    //Add new content
     postsByCategories.forEach((element, index) => {
-        var el = document.createElement('div');
-        el.innerHTML = `<div>
-                            <div class='contentClass-collapsed'>
-                                <div class='postCategory'>מסלול לימוד ${getCategoryNameByID(element[rightArrowPressedCounter].categories[0])} </div>
-                                <div class='postTitle'>${element[rightArrowPressedCounter].title.rendered}</div>
-                                <div class='postContent'>${element[rightArrowPressedCounter].content.rendered}</div>
-                            </div>
-                            <div class='postReadMore'><span>>></span>המשך...</div>
-                            <hr class='hr-content'>
-                        <div>`;
+        if (element[rightArrowPressedCounter] !== undefined && element[rightArrowPressedCounter] !== null){
+            var elementContent = document.createElement('div');
+            elementContent.innerHTML = `<div>
+                                <div class='contentClass-collapsed'>
+                                    <div class='postCategory'>מסלול לימוד ${getCategoryNameByID(element[rightArrowPressedCounter].categories[0])} </div>
+                                    <div class='postTitle'>${element[rightArrowPressedCounter].title.rendered}</div>
+                                    <div class='postContent'>${element[rightArrowPressedCounter].content.rendered}</div>
+                                </div>
+                                <div class='postReadMore'><span>>></span>המשך...</div>
+                                <hr class='hr-content'>
+                            <div>`;
 
-        bodyContainer.appendChild(el);
-        console.log(index);
+            bodyContainer.appendChild(elementContent);
+        }       
     });
     //attach click handler to "read more sections"
     Array.from(document.getElementsByClassName("postReadMore")).forEach(element =>{
         addEventListener("click", postReadMoreClickHandler, false);
     });
+
+
+    //TODO: check if bodyContainer is empty!!!
 }
 
 function postReadMoreClickHandler(e){
