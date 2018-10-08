@@ -1,4 +1,3 @@
-
 /* Global Members */
 let mainContainer = document.getElementById("main-container");
 let hebrewDate = document.getElementById("hebrew-date");
@@ -6,6 +5,7 @@ let bodyContainer = document.getElementById("body-container");
 
 let rightArrowPressedCounter = 0;
 let postsByCategories = new Map();
+let currentDay = new Date();
 
 /* Loader - showed at start - when loading the content*/
 let loader = document.getElementById("loader");
@@ -18,15 +18,16 @@ function loaderAnimationStart(){
 rightArrow = document.getElementById("right-arrow");
 rightArrow.addEventListener("click",rightArrowClicked);
 function rightArrowClicked(){
+    //Don't increment when reaching the last post
     if (bodyContainer.firstElementChild && bodyContainer.firstElementChild.id != "endOfContent"){
         ++rightArrowPressedCounter;
+        currentDay.setDate(currentDay.getDate() - 1);
+        SetHebrowDate(currentDay);
     }
     console.log(rightArrowPressedCounter);
     leftArrow.style.border= "solid #FAB019";
     leftArrow.style.borderWidth= "0 2px 2px 0";
     buildBodyContainer();
-
-
 }
 
 /* Left Arrow*/
@@ -43,18 +44,22 @@ function leftArrowClicked(){
         leftArrow.style.border= "solid #d4d1ca";
         leftArrow.style.borderWidth= "0 2px 2px 0";
     }
+    currentDay.setDate(currentDay.getDate() + 1);
+    SetHebrowDate(currentDay);
     buildBodyContainer();
 }
 
 
 
+
 /***** App Flow *****/
 
-SetHebrowDate();
+SetHebrowDate(currentDay);
 
-function SetHebrowDate () {
+function SetHebrowDate (currentDay) {
     try{
-        let todayHebroeDate = new Hebcal.HDate(Hebcal.HDate()).toString('h');
+        //let todayHebroeDate = new Hebcal.HDate(Hebcal.HDate()).toString('h');
+        let todayHebroeDate = new Hebcal.HDate(currentDay).toString('h');
         console.log(todayHebroeDate);
         hebrewDate.innerHTML = todayHebroeDate;
         
@@ -150,7 +155,7 @@ function buildBodyContainer(){
         addEventListener("click", postReadMoreClickHandler, false);
     });
 
-
+    //TODO:
     if(!bodyContainer.firstChild){
         bodyContainer.innerHTML = `<div id="endOfContent">תודה לרב גבריאל אלישע!<div>`
     }
@@ -174,3 +179,9 @@ function postReadMoreClickHandler(e){
         }
     }
 }
+
+//var year = new Hebcal();
+//var d = new Date()
+//decrement date: d.setDate(d.getDate() - 1)
+//var r = year.find(d)
+//r[0].toString('h')

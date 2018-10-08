@@ -176,7 +176,7 @@ h1{
 .contentClass-collapsed{
     max-height: 35vh;
     margin: 10px 0;
-    overflow: scroll;
+    overflow: hidden;
     transition: max-height 1s;
 }
 
