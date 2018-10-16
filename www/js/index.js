@@ -50,63 +50,45 @@ function leftArrowClicked(){
 }
 
 
-
-
 /***** App Flow *****/
 
-SetHebrowDate(currentDay);
-
-function SetHebrowDate (currentDay) {
+(function SetHebrowDate (currentDay) {
     try{
         //let todayHebroeDate = new Hebcal.HDate(Hebcal.HDate()).toString('h');
         let todayHebroeDate = new Hebcal.HDate(currentDay).toString('h');
         console.log(todayHebroeDate);
-        hebrewDate.innerHTML = todayHebroeDate;
-        
+        hebrewDate.innerHTML = todayHebroeDate;   
     }
     catch(e){
         alert("Error in SetHebrowDate:" + e);
-    }
-    
-}
+    }   
+})(currentDay);
 
 //TODO: get the categories to fetch from settins/local storage
 function getCategoriesToFetch(){
     return [2,3,4];
 }
 
-let shouldLoadDataToday = true; //TODO: check local storage for today data
+//Check if the updated data is allready in local storage or we should fetch it
 let postsData;
+let shouldLoadDataToday = true; 
+const lastLoadDataCompletedTime = localStorage.getItem("lastLoadDataCompletedTime");
+if (lastLoadDataCompletedTime){
+    let lastLoadDataCompletedTimeDateObj = new Date(Number.parseInt(lastLoadDataCompletedTime));
+    console.log(lastLoadDataCompletedTimeDateObj)
 
-if (shouldLoadDataToday){
-    mainContainer.style.display = "none"
-    loader.style.height = screen.height + "px";
-
-    //TODO: get the categories to fetch from settins/local storage
-    let categoriesToFetch = getCategoriesToFetch();
-    fetchPosts(categoriesToFetch) 
-}
-
-function getCategoriesToFetch(){
-    return [2,3,4];
-}
-
-async function fetchPosts (categoriesToFetch) {
-    try{
-        let response = await fetch(`https://bizchut-nashim.com/wp-json/wp/v2/posts/?categories=${categoriesToFetch}`);
-        // only proceed once promise is resolved
-        postsData = await response.json();
-        loadDataCompleted();
+    let today = new Date();
+    if(lastLoadDataCompletedTimeDateObj.getDate() == today.getDate()){
+        shouldLoadDataToday = false;
+        postsData = JSON.parse(localStorage.getItem("postsData"));
+        setPostsByCategories();
+        loader.className +=" slide-down fadeOut"
+        buildBodyContainer()
     }
-    catch(e){
-        alert("Error in fetchPosts func:" + e);
-    }
-    
 }
 
 //Insert the posts that was fetched into Map by categories
-function loadDataCompleted(){
-    console.log(postsData);
+function setPostsByCategories(){
     postsData.map((post) =>{
         console.log(post);
         let arr = [];
@@ -117,16 +99,40 @@ function loadDataCompleted(){
         arr.push(post);
         postsByCategories.set(post.categories[0], arr);  
     });
-    loader.className +=" slide-down fadeOut"
-    
-    //TODO: Save data to local storage or DB with today's time stamp, so in 
-    //next time we won't use fetch to bring data
-    localStorage.setItem("loadDataCompleted-time", new Date().getTime().toString())
-    localStorage.setItem("postsData",JSON.stringify(postsData));
-    buildBodyContainer()
 }
 
-//Insert posts contents"
+if (shouldLoadDataToday){
+    mainContainer.style.display = "none"
+    loader.style.height = screen.height + "px";
+
+    //TODO: get the categories to fetch from settins/local storage
+    let categoriesToFetch = getCategoriesToFetch();
+    fetchPosts(categoriesToFetch) 
+}
+
+
+async function fetchPosts (categoriesToFetch) {
+    try{
+        let response = await fetch(`https://bizchut-nashim.com/wp-json/wp/v2/posts/?categories=${categoriesToFetch}`);
+        // only proceed once promise is resolved
+        postsData = await response.json();
+        console.log(postsData);
+        //loadDataCompleted();
+        setPostsByCategories();
+        loader.className +=" slide-down fadeOut"
+        
+        //Save data to local storage with today's time stamp, so in next time we won't use fetch to bring data
+        localStorage.setItem("lastLoadDataCompletedTime", new Date().getTime().toString())
+        localStorage.setItem("postsData",JSON.stringify(postsData));
+        buildBodyContainer();
+    }
+    catch(e){
+        alert("Error in fetchPosts func:" + e);
+    } 
+}
+
+
+//Show posts contents
 function buildBodyContainer(){
     //Remove old content if exists (usefull when pressing arrows)
         while (bodyContainer.firstChild) {
@@ -155,8 +161,9 @@ function buildBodyContainer(){
         addEventListener("click", postReadMoreClickHandler, false);
     });
 
-    //TODO:
+    
     if(!bodyContainer.firstChild){
+        //TODO: Move this div to helper.js and style it.
         bodyContainer.innerHTML = `<div id="endOfContent">תודה לרב גבריאל אלישע!<div>`
     }
 }
