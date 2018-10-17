@@ -52,7 +52,9 @@ function leftArrowClicked(){
 
 /***** App Flow *****/
 
-(function SetHebrowDate (currentDay) {
+SetHebrowDate (currentDay);
+
+function SetHebrowDate (currentDay) {
     try{
         //let todayHebroeDate = new Hebcal.HDate(Hebcal.HDate()).toString('h');
         let todayHebroeDate = new Hebcal.HDate(currentDay).toString('h');
@@ -62,7 +64,7 @@ function leftArrowClicked(){
     catch(e){
         alert("Error in SetHebrowDate:" + e);
     }   
-})(currentDay);
+}
 
 //TODO: get the categories to fetch from settins/local storage
 function getCategoriesToFetch(){
