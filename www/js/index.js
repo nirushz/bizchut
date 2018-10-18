@@ -2,7 +2,7 @@
 let mainContainer = document.getElementById("main-container");
 let hebrewDate = document.getElementById("hebrew-date");
 let bodyContainer = document.getElementById("body-container");
-
+let fetchNumber = localStorage.getItem("fetchNumber") || 1;
 let rightArrowPressedCounter = 0;
 let postsByCategories = new Map();
 let currentDay = new Date();
@@ -13,6 +13,13 @@ loader.addEventListener("animationstart", loaderAnimationStart, false);
 function loaderAnimationStart(){
     mainContainer.style.display = "block"
 }
+
+/*If 
+const lastLoadDataCompletedTime = localStorage.getItem("lastLoadDataCompletedTime");
+if(lastLoadDataCompletedTime){
+    loader.style.display = "none";
+}
+*/
 
 /* Right Arrow*/
 rightArrow = document.getElementById("right-arrow");
@@ -66,27 +73,72 @@ function SetHebrowDate (currentDay) {
     }   
 }
 
+
+//Check if the updated data is allready in local storage or we should fetch it
+const lastLoadDataCompletedTime = localStorage.getItem("lastLoadDataCompletedTime");
+let postsData;
+let shouldLoadDataToday = true; 
+if (lastLoadDataCompletedTime){
+    let lastLoadDataCompletedTimeDateObj = new Date(Number.parseInt(lastLoadDataCompletedTime));
+    let today = new Date();
+
+    if(lastLoadDataCompletedTimeDateObj.getDate() == today.getDate() && 
+       lastLoadDataCompletedTimeDateObj.getMonth() == today.getMonth()){
+        
+        loader.style.display = "none";
+        shouldLoadDataToday = false;
+        //postsData = JSON.parse(localStorage.getItem("postsData"));
+        //setPostsByCategories();
+        postsByCategories = objToMap(JSON.parse(localStorage.getItem("postsByCategories")));
+        loader.className +=" slide-down fadeOut"
+        buildBodyContainer()
+    }
+}
+
+
 //TODO: get the categories to fetch from settins/local storage
 function getCategoriesToFetch(){
     return [2,3,4];
 }
 
-//Check if the updated data is allready in local storage or we should fetch it
-let postsData;
-let shouldLoadDataToday = true; 
-const lastLoadDataCompletedTime = localStorage.getItem("lastLoadDataCompletedTime");
-if (lastLoadDataCompletedTime){
-    let lastLoadDataCompletedTimeDateObj = new Date(Number.parseInt(lastLoadDataCompletedTime));
-    console.log(lastLoadDataCompletedTimeDateObj)
+if (shouldLoadDataToday){
+    mainContainer.style.display = "none";
+    loader.style.height = screen.height + "px";
 
-    let today = new Date();
-    if(lastLoadDataCompletedTimeDateObj.getDate() == today.getDate()){
-        shouldLoadDataToday = false;
-        postsData = JSON.parse(localStorage.getItem("postsData"));
-        setPostsByCategories();
-        loader.className +=" slide-down fadeOut"
-        buildBodyContainer()
+    //When starting a new day we want to clean up
+    fetchNumber = 1;
+    postsByCategories = new Map();
+
+
+    //TODO: get the categories to fetch from settins/local storage
+    let categoriesToFetch = getCategoriesToFetch();
+    fetchPosts(categoriesToFetch);
+}
+
+
+async function fetchPosts (categoriesToFetch) {
+    try{
+        let response = await fetch(`https://bizchut-nashim.com/wp-json/wp/v2/posts/?categories=${categoriesToFetch}&per_page=10&page=${fetchNumber}`);
+        // only proceed once promise is resolved
+        if (response.ok){
+            postsData = await response.json();
+            ++fetchNumber;
+            console.log(postsData);
+            setPostsByCategories();
+            loader.className +=" slide-down fadeOut";
+            
+            //Save data to local storage with today's time stamp, so in next time we won't use fetch to bring data
+            //localStorage.setItem("lastLoadDataCompletedTime", new Date().getTime().toString())
+            //localStorage.setItem("postsData",JSON.stringify(postsData));
+            buildBodyContainer();
+        }
+        else{ //No more posts
+            bodyContainer.innerHTML = endOfContentDiv;
+        }
     }
+    catch(e){
+        alert("Error in fetchPosts func:" + e);
+    } 
 }
 
 //Insert the posts that was fetched into Map by categories
@@ -101,36 +153,11 @@ function setPostsByCategories(){
         arr.push(post);
         postsByCategories.set(post.categories[0], arr);  
     });
-}
 
-if (shouldLoadDataToday){
-    mainContainer.style.display = "none"
-    loader.style.height = screen.height + "px";
-
-    //TODO: get the categories to fetch from settins/local storage
-    let categoriesToFetch = getCategoriesToFetch();
-    fetchPosts(categoriesToFetch) 
-}
-
-
-async function fetchPosts (categoriesToFetch) {
-    try{
-        let response = await fetch(`https://bizchut-nashim.com/wp-json/wp/v2/posts/?categories=${categoriesToFetch}`);
-        // only proceed once promise is resolved
-        postsData = await response.json();
-        console.log(postsData);
-        //loadDataCompleted();
-        setPostsByCategories();
-        loader.className +=" slide-down fadeOut"
-        
-        //Save data to local storage with today's time stamp, so in next time we won't use fetch to bring data
-        localStorage.setItem("lastLoadDataCompletedTime", new Date().getTime().toString())
-        localStorage.setItem("postsData",JSON.stringify(postsData));
-        buildBodyContainer();
-    }
-    catch(e){
-        alert("Error in fetchPosts func:" + e);
-    } 
+    //Save data to local storage with today's time stamp, so in next time we won't use fetch to bring data
+    localStorage.setItem("lastLoadDataCompletedTime", new Date().getTime().toString())
+    localStorage.setItem("postsByCategories",JSON.stringify(mapToObj(postsByCategories)));
+    localStorage.setItem("fetchNumber",fetchNumber);
 }
 
 
@@ -158,15 +185,16 @@ function buildBodyContainer(){
             bodyContainer.appendChild(elementContent);
         }       
     });
-    //attach click handler to "read more sections"
+    //attach click handler to "read more" sections
     Array.from(document.getElementsByClassName("postReadMore")).forEach(element =>{
         addEventListener("click", postReadMoreClickHandler, false);
     });
 
-    
+    //When out of posts go and fetch some more data
     if(!bodyContainer.firstChild){
-        //TODO: Move this div to helper.js and style it.
-        bodyContainer.innerHTML = `<div id="endOfContent">תודה לרב גבריאל אלישע!<div>`
+        //bodyContainer.innerHTML = `<div id="endOfContent">תודה לרב גבריאל אלישע!<div>`
+        let categoriesToFetch = getCategoriesToFetch();
+        fetchPosts(categoriesToFetch);
     }
 }
 
@@ -177,20 +205,20 @@ function postReadMoreClickHandler(e){
         if(contentClass.className == "contentClass-collapsed"){
             contentClass.className = "contentClass-extended";
             window.setTimeout(()=>{
-                e.target.innerHTML = "סגירה<span><<</span>"
+                e.target.innerHTML = "סגירה<span><<</span>";
             },1000);  
         }
         else{
             contentClass.className = "contentClass-collapsed";
             window.setTimeout(()=>{
-                e.target.innerHTML = "<span>>></span>המשך..."
+                e.target.innerHTML = "<span>>></span>המשך...";
             },800);
         }
     }
 }
 
-//var year = new Hebcal();
-//var d = new Date()
-//decrement date: d.setDate(d.getDate() - 1)
-//var r = year.find(d)
-//r[0].toString('h')
+/*
+TODO:
+1. fetch before getting to "no posts"
+2. test real user (new posts every day...)
+*/

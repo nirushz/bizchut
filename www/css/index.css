@@ -181,9 +181,9 @@ h1{
 }
 
 .contentClass-extended {
-    max-height: 2000px;
+    /*max-height: 2000px;*/
     margin: 10px 0;
-    overflow: scroll;
+    overflow: hidden;
     transition: max-height 2s ease-in;
 }
 
