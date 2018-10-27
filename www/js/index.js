@@ -1,25 +1,23 @@
 /* Global Members */
 let mainContainer = document.getElementById("main-container");
+let loader = document.getElementById("loader");
 let hebrewDate = document.getElementById("hebrew-date");
 let bodyContainer = document.getElementById("body-container");
-let fetchNumber = localStorage.getItem("fetchNumber") || 1;
+let fetchNumber = localStorage.getItem("fetchNumber") || 1; //Page number to fetch
 let rightArrowPressedCounter = 0;
 let postsByCategories = new Map();
 let currentDay = new Date();
+let shouldRemoveLoader = false;
+
+mainContainer.style.display = "none";
+loader.style.height = screen.height + "px";
 
 /* Loader - showed at start - when loading the content*/
-let loader = document.getElementById("loader");
 loader.addEventListener("animationstart", loaderAnimationStart, false);
 function loaderAnimationStart(){
     mainContainer.style.display = "block"
 }
 
-/*If 
-const lastLoadDataCompletedTime = localStorage.getItem("lastLoadDataCompletedTime");
-if(lastLoadDataCompletedTime){
-    loader.style.display = "none";
-}
-*/
 
 /* Right Arrow*/
 rightArrow = document.getElementById("right-arrow");
@@ -59,6 +57,13 @@ function leftArrowClicked(){
 
 /***** App Flow *****/
 
+let intervalID = window.setInterval(()=>{
+    if(shouldRemoveLoader){
+        loader.className +=" slide-down fadeOut"
+        window.clearInterval(intervalID);
+    }
+}, 5000);
+
 SetHebrowDate (currentDay);
 
 function SetHebrowDate (currentDay) {
@@ -84,15 +89,12 @@ if (lastLoadDataCompletedTime){
 
     if(lastLoadDataCompletedTimeDateObj.getDate() == today.getDate() && 
        lastLoadDataCompletedTimeDateObj.getMonth() == today.getMonth()){
-        
-        loader.style.display = "none";
+        shouldRemoveLoader = true;
         shouldLoadDataToday = false;
-        //postsData = JSON.parse(localStorage.getItem("postsData"));
-        //setPostsByCategories();
         postsByCategories = objToMap(JSON.parse(localStorage.getItem("postsByCategories")));
-        loader.className +=" slide-down fadeOut"
         buildBodyContainer()
     }
+    //else...Add whats down...
 }
 
 
@@ -102,8 +104,8 @@ function getCategoriesToFetch(){
 }
 
 if (shouldLoadDataToday){
-    mainContainer.style.display = "none";
-    loader.style.height = screen.height + "px";
+    //mainContainer.style.display = "none";
+    //loader.style.height = screen.height + "px";
 
     //When starting a new day we want to clean up
     fetchNumber = 1;
@@ -125,7 +127,8 @@ async function fetchPosts (categoriesToFetch) {
             ++fetchNumber;
             console.log(postsData);
             setPostsByCategories();
-            loader.className +=" slide-down fadeOut";
+            shouldRemoveLoader = true;
+            //loader.className +=" slide-down fadeOut";
             
             //Save data to local storage with today's time stamp, so in next time we won't use fetch to bring data
             //localStorage.setItem("lastLoadDataCompletedTime", new Date().getTime().toString())
@@ -137,7 +140,9 @@ async function fetchPosts (categoriesToFetch) {
         }
     }
     catch(e){
+        window.clearInterval(intervalID);
         alert("Error in fetchPosts func:" + e);
+
     } 
 }
 
