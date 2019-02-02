@@ -9,10 +9,22 @@ let postsByCategories = new Map();
 let currentDay = new Date();
 let shouldRemoveLoader = false;
 
-mainContainer.style.display = "none";
-loader.style.height = screen.height + "px";
-
 /* Loader - showed at start - when loading the content*/
+loader.style.height = screen.height + "px";
+mainContainer.style.display = "none";
+
+/*getJSONP("./js/pitgamim.json", "nir", nir );
+
+function nir(json){
+    console.log(json);
+}
+*/
+
+let randomPitgam = Math.floor(Math.random() * 15);  //0-14
+document.getElementById("phrase-content").innerText = pitgamim[randomPitgam].pitgam;
+document.getElementById("phrase-author").innerText = pitgamim[randomPitgam].author;
+
+
 loader.addEventListener("animationstart", loaderAnimationStart, false);
 function loaderAnimationStart(){
     mainContainer.style.display = "block"
@@ -31,7 +43,7 @@ function rightArrowClicked(){
     }
     console.log(rightArrowPressedCounter);
     leftArrow.style.border= "solid #FAB019";
-    leftArrow.style.borderWidth= "0 2px 2px 0";
+    leftArrow.style.borderWidth= "0 3px 3px 0";
     buildBodyContainer();
 }
 
@@ -47,7 +59,7 @@ function leftArrowClicked(){
     }
     if (rightArrowPressedCounter == 0){
         leftArrow.style.border= "solid #d4d1ca";
-        leftArrow.style.borderWidth= "0 2px 2px 0";
+        leftArrow.style.borderWidth= "0 3px 3px 0";
     }
     currentDay.setDate(currentDay.getDate() + 1);
     SetHebrowDate(currentDay);
@@ -59,7 +71,9 @@ function leftArrowClicked(){
 
 let intervalID = window.setInterval(()=>{
     if(shouldRemoveLoader){
-        loader.className +=" slide-down fadeOut"
+        loader.className +=" slide-up fadeOut";
+        //removes "spin360" class in order to stop spininig.
+        document.getElementById("logo-background-img").className = ""; 
         window.clearInterval(intervalID);
     }
 }, 5000);
@@ -100,7 +114,7 @@ if (lastLoadDataCompletedTime){
 
 //TODO: get the categories to fetch from settins/local storage
 function getCategoriesToFetch(){
-    return [2,3,4];
+    return [2,3];
 }
 
 if (shouldLoadDataToday){
@@ -120,7 +134,7 @@ if (shouldLoadDataToday){
 
 async function fetchPosts (categoriesToFetch) {
     try{
-        let response = await fetch(`https://bizchut-nashim.com/wp-json/wp/v2/posts/?categories=${categoriesToFetch}&per_page=10&page=${fetchNumber}`);
+        let response = await fetch(`https://bizchut-nashim.com/wp-json/wp/v2/posts/?categories=${categoriesToFetch}&per_page=100&page=${fetchNumber}`);
         // only proceed once promise is resolved
         if (response.ok){
             postsData = await response.json();
@@ -128,11 +142,8 @@ async function fetchPosts (categoriesToFetch) {
             console.log(postsData);
             setPostsByCategories();
             shouldRemoveLoader = true;
-            //loader.className +=" slide-down fadeOut";
+            //loader.className +=" slide-up fadeOut";
             
-            //Save data to local storage with today's time stamp, so in next time we won't use fetch to bring data
-            //localStorage.setItem("lastLoadDataCompletedTime", new Date().getTime().toString())
-            //localStorage.setItem("postsData",JSON.stringify(postsData));
             buildBodyContainer();
         }
         else{ //No more posts
@@ -197,7 +208,6 @@ function buildBodyContainer(){
 
     //When out of posts go and fetch some more data
     if(!bodyContainer.firstChild){
-        //bodyContainer.innerHTML = `<div id="endOfContent">תודה לרב גבריאל אלישע!<div>`
         let categoriesToFetch = getCategoriesToFetch();
         fetchPosts(categoriesToFetch);
     }
