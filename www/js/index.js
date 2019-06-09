@@ -13,14 +13,8 @@ let shouldRemoveLoader = false;
 loader.style.height = screen.height + "px";
 mainContainer.style.display = "none";
 
-/*getJSONP("./js/pitgamim.json", "nir", nir );
 
-function nir(json){
-    console.log(json);
-}
-*/
-
-let randomPitgam = Math.floor(Math.random() * 15);  //0-14
+let randomPitgam = Math.floor(Math.random() * 21);  //0-20
 document.getElementById("phrase-content").innerText = pitgamim[randomPitgam].pitgam;
 document.getElementById("phrase-author").innerText = pitgamim[randomPitgam].author;
 
@@ -76,7 +70,7 @@ let intervalID = window.setInterval(()=>{
         document.getElementById("logo-background-img").className = ""; 
         window.clearInterval(intervalID);
     }
-}, 5000);
+}, 6500);
 
 SetHebrowDate (currentDay);
 
@@ -236,4 +230,12 @@ function postReadMoreClickHandler(e){
 TODO:
 1. fetch before getting to "no posts"
 2. test real user (new posts every day...)
+*/
+
+/*TODO:
+1. more pitgamin
+2. להסיר טוענים בשבילך
+3.לסדר את התודה לרב גבריאל 
+4. להוסיף עוד תוכן הלכה
+5. עמוד אודות שיכיל גם מה עוד מתוכנן לגרסה הבאה
 */

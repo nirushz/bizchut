@@ -123,6 +123,7 @@ h1{
     width: 25%;
     position: relative;
     top:2px;
+    left: -17%; /*REMOVE it when displaying main manu again */
 }
 #app-contact-us img{
     width: 50%;
