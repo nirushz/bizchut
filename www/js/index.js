@@ -128,7 +128,27 @@ if (shouldLoadDataToday){
 
 async function fetchPosts (categoriesToFetch) {
     try{
-        let response = await fetch(`https://bizchut-nashim.com/wp-json/wp/v2/posts/?categories=${categoriesToFetch}&per_page=100&page=${fetchNumber}`);
+        let url = `https://bizchut-nashim.com/wp-json/wp/v2/posts/?categories=${categoriesToFetch}&per_page=100&page=${fetchNumber}`;
+        let props = {
+            method: 'GET', // *GET, POST, PUT, DELETE, etc.
+            mode: 'cors', // no-cors, cors, *same-origin
+            //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+            //credentials: 'same-origin', // include, *same-origin, omit
+            /*
+            headers: {
+                'Content-Type': 'application/json',
+                'Access-Control-Allow-Origin': '*',
+                'Access-Control-Allow-Methods': '"GET,HEAD,OPTIONS,POST,PUT',
+                'Access-Control-Allow-Credentials': 'true',
+                'Access-Control-Allow-Headers': 'Content-Type'
+            },
+            */
+            //redirect: 'follow', // manual, *follow, error
+            //referrer: 'no-referrer', // no-referrer, *client
+        }
+
+        let response = await fetch(url, props);
+
         // only proceed once promise is resolved
         if (response.ok){
             postsData = await response.json();
