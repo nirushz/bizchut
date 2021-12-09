@@ -1,0 +1,265 @@
+@font-face {
+    font-family: 'Heebo';
+    font-style: normal;
+    font-weight: 400;
+    src: url('../Fonts/Heebo-Regular.ttf');
+}
+
+html{
+    /*height: 100%;*/
+}
+body{
+    font-family: 'Heebo', sans-serif;
+    direction: rtl;
+    height: 100%;
+}
+
+h1{
+    margin: 0px;
+}
+
+.hr-date{
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #FFE32D , #FAB019);
+    height: 1px;
+    border: 0;
+}
+
+.hr-content{
+    margin: 0;
+    padding: 0;
+    background: linear-gradient(to right, #CB1461 , #60054A);
+    height: 1px;
+    border: 0;
+}
+#loader{
+    position: relative;
+    width: 100%;
+    background-color: rgb(240, 240, 240);
+}
+
+#logo-spinner-container{
+    position: absolute;
+    width: 50%;
+    right: 50%;
+    bottom: 60%;
+    transform:translate(50%,50%)
+}
+
+#loader p {
+   text-align: center;
+   position: relative;
+   top: 30px;
+}
+#logo-spinner-container span{
+    position: absolute;
+    right: 50%;
+    bottom: 60%;
+    transform:translate(50%,50%);
+    font-size: 15vw;
+    font-weight: bold;
+    z-index: 2;
+    background: linear-gradient(to right, #FFE32D , #FAB019);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+#logo-hand-img{
+    position: absolute;
+    width:70%;
+    bottom: 5%;
+    right: 10%;
+    z-index: 2;
+}
+.spin360 {
+    
+    -webkit-animation:spin 4s linear infinite;
+    -moz-animation:spin 4s linear infinite;
+    animation:spin 4s linear infinite;
+}
+@-moz-keyframes spin { 100% { -moz-transform: rotate(360deg); } }
+@-webkit-keyframes spin { 100% { -webkit-transform: rotate(360deg); } }
+@keyframes spin { 100% { -webkit-transform: rotate(360deg); transform:rotate(360deg); } }
+
+
+.fadeOut {
+    visibility: hidden;
+    opacity: 0;
+    transition: visibility 1.5s, opacity 1.5s ease-in;
+}
+
+
+.slide-up{  
+    animation-name: slideUp;
+    animation-duration: 3s;
+    animation-fill-mode: forwards
+}
+
+@keyframes slideUp{
+    0% {}
+    100% {background-color: white; height: 0px; display: none;}
+}
+
+
+/*APP NAME*/
+#main-container{
+    height: 100%;
+}
+
+.header-app-name{
+    display:flex;
+
+}
+
+#app-title {
+    width: 70%;
+}
+#app-title img{
+    width: 60%;
+}
+
+#app-contact-us {
+    width: 25%;
+    position: relative;
+    top:2px;
+    left: -17%; /*REMOVE it when displaying main manu again */
+}
+#app-contact-us img{
+    width: 50%;
+}
+
+#app-menu {
+    width: 2%;
+}
+
+/*APP DATE*/
+
+.header-app-date{
+    display:flex;
+    margin-top: 6px;
+    margin-bottom: 7px;
+}
+
+#hebrew-date{
+    width: 100%;
+    text-align: center;
+}
+
+.arrow {
+    border: solid #FAB019;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    width: 10px;
+    height: 10px;
+    margin-top: 7px;
+    cursor: pointer;
+}
+  
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+    margin-right: 5px;
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+    margin-left: 5px;
+}
+
+
+/*Body Container*/
+
+#body-container{
+    /*height: 100%;*/
+}
+
+.contentClass-collapsed{
+    max-height: 35vh;
+    margin: 10px 0;
+    overflow: hidden;
+    transition: max-height 1s;
+}
+
+.contentClass-extended {
+    /*max-height: 2000px;*/
+    margin: 10px 0;
+    overflow: hidden;
+    transition: max-height 2s ease-in;
+}
+
+.postCategory{
+    font-size: 6vw;
+    color: #60054A
+}
+
+.postTitle{
+    font-size: 5vw;
+    font-weight: bold;
+}
+
+.postContent{
+    font-size: 4vw;
+}
+
+.postReadMore{
+    text-align: left;
+    font-weight: bold;
+    font-size: 4vw;
+}
+
+.postReadMore span{
+    color: #FAB019;
+    margin: 0 10px;
+}
+
+/*POPUP*/
+.overlay {
+    position: fixed;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    background: rgba(0, 0, 0, 0.7);
+    transition: opacity 500ms;
+    visibility: hidden;
+    opacity: 0;
+  }
+  .overlay:target {
+    visibility: visible;
+    opacity: 1;
+  }
+  
+  .popup {
+    margin: 100px auto;
+    padding: 20px;
+    background: #fff;
+    border-radius: 5px;
+    width: 80%;
+    position: relative;
+    transition: all 3s ease-in-out;
+  }
+  
+  .popup h2 {
+    margin-top: 10px;
+    color: #333;
+  }
+  .popup .close {
+    position: absolute;
+    top: 0px;
+    left: 10px;
+    transition: all 200ms;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+    color: #333;
+  }
+  .popup .close:hover {
+    color: #FAB019;
+  }
+  .popup .content {
+    max-height: 30%;
+    overflow: auto;
+  }
+  
