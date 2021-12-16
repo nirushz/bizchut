@@ -1,0 +1,18 @@
+{
+  "version": 2,
+  "artifactType": {
+    "type": "APK",
+    "kind": "Directory"
+  },
+  "applicationId": "il.co.nnz.bizchut",
+  "variantName": "release",
+  "elements": [
+    {
+      "type": "SINGLE",
+      "filters": [],
+      "versionCode": 10201,
+      "versionName": "1.2.0",
+      "outputFile": "app-release.apk"
+    }
+  ]
+}

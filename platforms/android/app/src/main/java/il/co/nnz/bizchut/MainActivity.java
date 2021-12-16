@@ -1,5 +1,3 @@
-#!/usr/bin/env node
-
 /*
        Licensed to the Apache Software Foundation (ASF) under one
        or more contributor license agreements.  See the NOTICE file
@@ -17,18 +15,27 @@
        KIND, either express or implied.  See the License for the
        specific language governing permissions and limitations
        under the License.
-*/
+ */
 
-var emulators = require('cordova-android/lib/emulator');
+package il.co.nnz.bizchut;
 
-// Usage support for when args are given
-require('cordova-android/lib/check_reqs').check_android().then(function () {
-    emulators.list_images().then(function (emulator_list) {
-        emulator_list && emulator_list.forEach(function (emu) {
-            console.log(emu.name);
-        });
-    }, function (err) {
-        console.error('ERROR: ' + err);
-        process.exit(2);
-    });
-});
+import android.os.Bundle;
+import org.apache.cordova.*;
+
+public class MainActivity extends CordovaActivity
+{
+    @Override
+    public void onCreate(Bundle savedInstanceState)
+    {
+        super.onCreate(savedInstanceState);
+
+        // enable Cordova apps to be started in the background
+        Bundle extras = getIntent().getExtras();
+        if (extras != null && extras.getBoolean("cdvStartInBackground", false)) {
+            moveTaskToBack(true);
+        }
+
+        // Set by <content src="index.html" /> in config.xml
+        loadUrl(launchUrl);
+    }
+}
