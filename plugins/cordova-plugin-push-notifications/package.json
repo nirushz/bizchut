@@ -1,0 +1,55 @@
+{
+  "_from": "cordova-plugin-push-notifications",
+  "_id": "cordova-plugin-push-notifications@1.1.3",
+  "_inBundle": false,
+  "_integrity": "sha512-ZrVi6u7pJrPGu1IWpVbQ4NQbjkZ/iaSACHCpfln3RGpmfO+EXXsrZMeH8GFphL6SdCy4KSONfSzuZ2OngiVxww==",
+  "_location": "/cordova-plugin-push-notifications",
+  "_phantomChildren": {},
+  "_requested": {
+    "type": "tag",
+    "registry": true,
+    "raw": "cordova-plugin-push-notifications",
+    "name": "cordova-plugin-push-notifications",
+    "escapedName": "cordova-plugin-push-notifications",
+    "rawSpec": "",
+    "saveSpec": null,
+    "fetchSpec": "latest"
+  },
+  "_requiredBy": [
+    "#DEV:/",
+    "#USER"
+  ],
+  "_resolved": "https://registry.npmjs.org/cordova-plugin-push-notifications/-/cordova-plugin-push-notifications-1.1.3.tgz",
+  "_shasum": "9f11a9af31144ba25408084a3570cc308513e242",
+  "_spec": "cordova-plugin-push-notifications",
+  "_where": "C:\\Workspaces\\Bizchut\\bizchut",
+  "author": {
+    "name": "maxim.kolmogorov@gmail.com"
+  },
+  "bugs": {
+    "url": "https://github.com/Maxim-Kolmogorov/cordova-plugin-push-notifications/issues"
+  },
+  "bundleDependencies": false,
+  "cordova": {
+    "id": "cordova-plugin-push-notifications",
+    "platforms": [
+      "ios",
+      "android"
+    ]
+  },
+  "deprecated": false,
+  "description": "Push Notification for iOS (Swift) and Android (Kotlin)",
+  "homepage": "https://github.com/Maxim-Kolmogorov/cordova-plugin-push-notifications#readme",
+  "keywords": [
+    "ecosystem:cordova",
+    "cordova-ios",
+    "cordova-android"
+  ],
+  "license": "ISC",
+  "name": "cordova-plugin-push-notifications",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Maxim-Kolmogorov/cordova-plugin-push-notifications.git"
+  },
+  "version": "1.1.3"
+}

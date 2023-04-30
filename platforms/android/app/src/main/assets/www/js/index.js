@@ -246,6 +246,19 @@ function postReadMoreClickHandler(e){
     }
 }
 
+window.setTimeout(() => {
+
+    window.pushNotification.registration((token) => {
+        console.log(token);
+      })
+
+    // Catch notification if app launched after user touched on message
+    window.pushNotification.tapped((payload) => {
+        console.log(payload);
+    })
+} 
+
+, 3000);
 /*
 TODO:
 1. fetch before getting to "no posts"

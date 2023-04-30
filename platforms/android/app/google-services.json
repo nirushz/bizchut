@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "522867064285",
+    "project_id": "bizchut-2e1a8",
+    "storage_bucket": "bizchut-2e1a8.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:522867064285:android:f1bc7994e3be7956ab0a34",
+        "android_client_info": {
+          "package_name": "il.co.nnz.bizchut"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "522867064285-v06qkm0t245vphct9a9lojqi7bj1fkvo.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA628cfsYaDz27llTbpqTjT5lETfQENm-Y"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "522867064285-v06qkm0t245vphct9a9lojqi7bj1fkvo.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

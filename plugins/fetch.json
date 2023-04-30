@@ -1,1 +1,10 @@
-{}
+{
+  "cordova-plugin-push-notifications": {
+    "source": {
+      "type": "registry",
+      "id": "cordova-plugin-push-notifications"
+    },
+    "is_top_level": true,
+    "variables": {}
+  }
+}
