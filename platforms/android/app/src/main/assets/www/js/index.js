@@ -258,7 +258,7 @@ window.setTimeout(() => {
     })
 } 
 
-, 3000);
+, 5000);
 /*
 TODO:
 1. fetch before getting to "no posts"
